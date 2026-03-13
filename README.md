@@ -19,7 +19,7 @@ AI 辅助的 A 股/港股基本面分析系统。混合架构：Python 脚本完
 用户输入 (股票代码 + 年报PDF)
          │
     ┌────▼────┐
-    │ Phase 0 │  自动下载年报 (snowball-report-downloader)
+    │ Phase 0 │  自动下载年报 (/download-report)
     └────┬────┘
          │
     ┌────▼────┬──────────────┐
@@ -49,7 +49,7 @@ AI 辅助的 A 股/港股基本面分析系统。混合架构：Python 脚本完
 
 ### 各阶段角色
 
-- **Phase 0** — 调用 `snowball-report-downloader` 自动搜索并下载最新年报 PDF
+- **Phase 0** — 调用 `/download-report` 命令自动搜索并下载最新年报 PDF
 - **Phase 1A** — `tushare_collector.py` 通过 Tushare Pro API 采集结构化数据，输出 `data_pack_market.md`（含 §1–§17 共 17 个数据段）
 - **Phase 1B** — Agent 执行 WebSearch 补充治理/行业/子公司等非结构化信息
 - **Phase 2A** — `pdf_preprocessor.py` 使用关键词匹配定位年报 7 个目标章节，输出 `pdf_sections.json`
@@ -63,7 +63,7 @@ AI 辅助的 A 股/港股基本面分析系统。混合架构：Python 脚本完
 - Python >= 3.10
 - [Tushare Pro](https://tushare.pro/) 账号及 API Token
 - （可选）pdfplumber 用于 PDF 解析
-- （可选）`snowball-report-downloader` 用于自动下载年报
+- （内置）`/download-report` 命令用于自动下载年报
 
 ### 安装
 
@@ -91,8 +91,7 @@ bash init.sh --force-install
 1. 查找系统中 Python >= 3.10，创建 `.venv`
 2. 安装 `requirements.txt` 中的依赖
 3. 检查 `TUSHARE_TOKEN` 环境变量
-4. 检查 `snowball-report-downloader` 是否存在
-5. 运行测试验证环境
+4. 运行测试验证环境
 
 ### 配置 Tushare Token
 
@@ -225,7 +224,7 @@ Turtle_investment_framework/
 │   ├── pdf_preprocessor.py        # PDF 年报章节提取
 │   ├── screener_config.py         # 选股器配置（ScreenerConfig dataclass）
 │   ├── screener_core.py           # 选股器核心（TushareScreener + CLI）
-│   └── download_report.py         # 年报下载辅助
+│   └── download_report.py         # 年报PDF下载（含重试、PDF验证）
 ├── prompts/                       # LLM 分析提示词
 │   ├── coordinator.md             # 协调器（多阶段调度中枢）
 │   ├── phase1_数据采集.md          # Phase 1A/1B 数据采集指令

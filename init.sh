@@ -64,7 +64,7 @@ else
 fi
 
 # 3. Verify Tushare token
-echo "[3/6] Checking Tushare token..."
+echo "[3/5] Checking Tushare token..."
 # Source .env file if present
 if [ -f "$PROJECT_ROOT/.env" ]; then
     set -a
