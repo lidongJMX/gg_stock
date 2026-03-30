@@ -21,8 +21,8 @@ def prompt_text():
 
 class TestFeature31RoleAndScope:
     def test_role_is_data_collector(self, prompt_text):
-        """Agent role must be 数据采集专员."""
-        assert "数据采集专员" in prompt_text
+        """Agent role must be data collector (财经调查记者 v2.0 or 数据采集专员 v1.x)."""
+        assert "财经调查记者" in prompt_text or "数据采集专员" in prompt_text
 
     def test_agent_tasks_listed(self, prompt_text):
         """Prompt must list §7, §8, §10, §13 as agent tasks."""
@@ -35,7 +35,7 @@ class TestFeature31RoleAndScope:
 
     def test_forbids_analysis(self, prompt_text):
         """Prompt must forbid analysis and valuation."""
-        assert "不做任何分析判断" in prompt_text
+        assert "不做分析判断" in prompt_text or "不做任何分析判断" in prompt_text
         assert "不做估值计算" in prompt_text
 
 
