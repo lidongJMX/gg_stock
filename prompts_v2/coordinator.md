@@ -141,8 +141,15 @@ Task(
   description = "Phase3 Pre-flight"
 )
 
-# 读取 preflight 输出，确认数据完整性
-# 若关键数据（净利润、OCF、Capex）缺失 → 通知用户，分析将受限但继续
+# 读取 preflight 输出，检查裁决字段
+# 三路分支：
+
+# PROCEED → 直接启动 Agent A + B（正常路径）
+# SUPPLEMENT_NEEDED → 解析 SUPPLEMENT_REQUEST 标记，启动 WebSearch 补充：
+#   Task("根据以下补救请求通过 WebSearch 获取数据，追加到 data_pack_market.md：{gaps列表}")
+#   补充完成后重新运行 preflight（最多重试 1 次，防止循环）
+#   第2次 preflight 仍为 SUPPLEMENT_NEEDED → 降级为 PROCEED（标注数据局限性）
+# ABORT → 通知用户数据不足原因，不启动后续 Agent，输出简要报告说明无法分析
 
 # === Step 3.1: 并行执行 Agent A + Agent B ===
 # 以下两个 Task 同时启动：

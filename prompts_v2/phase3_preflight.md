@@ -79,7 +79,35 @@
 - 可用数据清单
 - 缺失数据清单
 - Warnings 应对策略
-- 若关键数据（净利润、OCF、Capex）缺失 → 标注分析将受限
+
+### 7. 数据质量裁决
+
+根据数据完整性评估，输出三级裁决：
+
+| 裁决 | 条件 | 协调器行为 |
+|------|------|-----------|
+| `PROCEED` | 关键数据（§3 净利润、§5 OCF、§5 Capex）完整，§3 至少3年可用 | 启动 Agent A + B |
+| `SUPPLEMENT_NEEDED` | 关键数据部分缺失但可通过 WebSearch 补救（如 §8 行业数据空白、§7 管理层不完整、财务字段有"—"可从年报/WebSearch 补充） | 暂停分析，触发补充 WebSearch，完成后重新 preflight（最多1次） |
+| `ABORT` | 关键数据不可补救（§3 净利润完全缺失、公司退市/停牌无法获取数据、可用报表期数 < 2年） | 停止分析，输出原因给用户 |
+
+**SUPPLEMENT_NEEDED 时**，额外输出补救请求：
+
+```
+<!-- SUPPLEMENT_REQUEST
+gaps:
+  - target: "§5 折旧摊销"
+    search: "{公司名} annual report depreciation amortization"
+    priority: high
+  - target: "§8 行业竞争"
+    search: "{公司名} 行业 竞争格局"
+    priority: medium
+-->
+```
+
+**ABORT 判断准则**（任一触发）：
+- §3 损益表完全无数据（净利润行全部为"—"）
+- 可用财年数 < 2（无法计算趋势和均值）
+- §1 基础信息缺失（代码/名称/市值均无数据，可能为无效标的）
 
 ---
 
@@ -118,6 +146,11 @@
 - §17 衍生指标: [存在/不存在]
 - Warnings 摘要: [列表]
 - 关键缺失: [列表/无]
+
+## 裁决
+- 结论: [PROCEED / SUPPLEMENT_NEEDED / ABORT]
+- 理由: [一句话]
+- 补救请求: [补救列表 / 无]
 ```
 
 ---
