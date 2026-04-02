@@ -153,9 +153,10 @@ export TUSHARE_TOKEN='your_token_here'
 ### 数据采集（仅 Phase 1A）
 
 ```bash
-# 基本用法
+# 基本用法，Mac
 .venv/bin/python scripts/tushare_collector.py --code 600887.SH
-
+# 基本用法，Windows
+.venv/Scripts/python.exe scripts/tushare_collector.py --code 600887.SH
 # 指定输出路径
 .venv/bin/python scripts/tushare_collector.py --code 600887.SH --output output/data_pack_market.md
 
@@ -190,8 +191,10 @@ export TUSHARE_TOKEN='your_token_here'
 ### 年报解析（仅 Phase 2A）
 
 ```bash
-# 基本用法
+# 基本用法，Mac
 .venv/bin/python scripts/pdf_preprocessor.py --pdf 伊利股份_2024_年报.pdf
+# 基本用法，Windows
+.venv/Scripts/python.exe scripts/pdf_preprocessor.py --pdf 伊利股份_2024_年报.pdf
 
 # 指定输出 + 详细日志
 .venv/bin/python scripts/pdf_preprocessor.py --pdf report.pdf --output output/pdf_sections.json --verbose
@@ -215,8 +218,10 @@ export TUSHARE_TOKEN='your_token_here'
 ### 批量选股（龟龟选股器）
 
 ```bash
-# 完整流程（Tier 1 + Tier 2）
+# 完整流程（Tier 1 + Tier 2），Mac
 .venv/bin/python scripts/screener_core.py
+# 完整流程（Tier 1 + Tier 2），Windows
+.venv/Scripts/python.exe scripts/screener_core.py
 
 # 仅 Tier 1 快速筛选
 .venv/bin/python scripts/screener_core.py --tier1-only
@@ -227,8 +232,10 @@ export TUSHARE_TOKEN='your_token_here'
 # 自定义阈值
 .venv/bin/python scripts/screener_core.py --min-roe 10 --max-pe 30 --min-gross-margin 20
 
-# 导出结果
+# 导出结果，Mac
 .venv/bin/python scripts/screener_core.py --csv output/screener.csv --html output/screener.html
+# 导出结果，Windows
+.venv/Scripts/python.exe scripts/screener_core.py --csv output/screener.csv --html output/screener.html
 
 # 刷新缓存
 .venv/bin/python scripts/screener_core.py --cache-refresh          # 全部刷新

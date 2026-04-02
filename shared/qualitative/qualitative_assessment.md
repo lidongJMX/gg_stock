@@ -18,6 +18,7 @@
 5. 判断锚点参考 `references/judgment_examples.md`（护城河、MD&A可信度等）
 6. 框架定义与评级标准参考 `references/framework_guide.md`（Greenwald 框架、飞轮护城河、评级门槛）
 7. 输出末尾按 `references/output_schema.md` 列出结构化参数表
+8. 使用 `Read` 工具读取任何 `.md` / `.json` / `.py` 文件时，**严禁传入 `pages` 参数**。`pages` 参数仅适用于 PDF 文件，对非 PDF 文件传入该参数会导致报错。
 
 **写作风格要求（可读性）**：
 1. **结论先行**：每个维度开头用 **一句话加粗结论** 引导读者，分析论证放在后面
